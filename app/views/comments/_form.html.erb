@@ -1,0 +1,23 @@
+<div class="container-fluid w-25 border mt-5 rounded">
+  <h4 class="text-center p-2">Add Comment</h4>
+  <%= form_for([@post, Comment.new], method: method, local: true) do |form| %>
+    <%= form.hidden_field :post_id, value: @post.id %>
+    <%= form.hidden_field :id, value: comment.id %>
+    <%= form.hidden_field :user_id, value: current_user.id %>
+    <div class="mb-3">
+      <%= form.label :message, class: "form-label" %>
+      <%= form.text_field :message, placeholder: 'Comment', value: comment.message, class: "form-control" %>
+      <% if comment.errors.any? %>
+	    <div class="invalid-feedback d-block">
+	      <% comment.errors.full_messages_for(:message).each do |error_message| %>
+	        <%= error_message %>.
+	      <% end %>
+	    </div>
+	  <% end %>
+    </div>
+
+    <div class="mb-3 text-center">
+      <%= form.submit value: button, class: "btn btn-primary toaster-check" %>
+    </div>
+  <% end %>
+</div>

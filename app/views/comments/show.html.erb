@@ -1,0 +1,4 @@
+<div>
+    <h1><%= @comment.message %></h1>
+    <%= link_to "Delete", post_comment_path(@comment),method: :delete, data: { confirm: 'Are you sure?' } %>
+</div>

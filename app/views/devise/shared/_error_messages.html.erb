@@ -1,0 +1,11 @@
+<% if resource.errors.any? %>
+  <div id="error_explanation">
+    <div>
+      <% resource.errors.full_messages.each do |message| %>
+        <div class="position-absolute toast-container top-0 end-0 p-5">
+          <%= render partial: "layouts/toaster", locals:{:message => message}%>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>

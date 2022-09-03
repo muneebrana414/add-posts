@@ -1,0 +1,52 @@
+<div class="container-fluid">
+  	<% if @current_user_posts %>
+  		<div class="container-fluid">
+		  	<h1 class="text-center">
+		    	Your Posts
+		  	</h1>
+		  	<div class="d-flex m-2 justify-content-center">
+			  <% @current_user_posts.each do |post| %>
+			  	<div class="card shadow mx-3" style="width: 23rem;">
+			  		<%= image_tag post.pictures.first, style:'height:250px;width:100%;object-fit:cover;', class: 'card-img-top border' if post.pictures.any?%>
+				  <div class="card-body text-center">
+				    <h5 class="card-title"><%= post.title%></h5>
+				    <p class="card-text"><%= post.description %><br>Comments: <%= post.comments.count %></p>
+				    <%= link_to "Read Post", post, class: "btn btn-primary text-decoration-none" %>
+				  </div>
+				</div>
+			  <% end %>
+			</div>
+		</div>
+  <% end %>
+	<div class="container-fluid">
+	  <h1 class="text-center">
+	    Posts
+	  </h1>
+	  <div class="d-flex m-2 justify-content-center">
+	  	<% @posts.each do |post| %>
+	  		<% if current_user %>
+	  			<% if post.user_id != current_user.id %>
+	  			<div class="card shadow" style="width: 23rem;">
+			  		<%= image_tag post.pictures.first,style:'height:250px;width:100%;object-fit:cover;', class: 'card-img-top border' if post.pictures.any?%>
+				  <div class="card-body text-center">
+				    <h5 class="card-title"><%= post.title%></h5>
+				    <p class="card-text"><%= post.description %><br>Comments: <%= post.comments.count %></p>
+				    <%= link_to "Read Post", post, class: "btn btn-primary text-decoration-none" %>
+				  </div>
+				</div>
+		  		<% end %>
+		  	<% else %>
+		  	<div class="card shadow mx-3" style="width: 23rem;">
+		  		<%= image_tag post.pictures.first,style:'height:250px;width:100%;object-fit:cover;', class: 'card-img-top border' if post.pictures.any?%>
+			  <div class="card-body text-center">
+			    <h5 class="card-title"><%= post.title%></h5>
+			    <p class="card-text"><%= post.description %><br>Comments: <%= post.comments.count %></p>
+			    <%= link_to "Read Post", post, class: "btn btn-primary text-decoration-none" %>
+			  </div>
+			</div>
+	  		<% end %>
+	  	<% end %>
+		<div>
+	</div>
+</div>
+

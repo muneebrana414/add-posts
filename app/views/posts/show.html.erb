@@ -1,0 +1,55 @@
+<%= link_to "", :back, class: 'btn btn-dark carousel-control-prev-icon m-2' %>
+<div class="d-flex justify-content-center">
+    <div class="card m-3 text-center" style="width: 50rem">
+
+        <% if @post.pictures.any? %>
+            <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-indicators bg-dark">
+                    <% @post.pictures.each_with_index do |picture,index| %>
+                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="<%= index %>" class="<%= "active" if index == 0 %>" aria-current="true"></button>
+                    <% end %>
+                </div>
+              <div class="carousel-inner">
+                <% @post.pictures.each_with_index do |picture,index| %>
+                    <div class="carousel-item <%= "active" if index == 0 %>">
+                      <%= image_tag picture, style: 'height:300px;width:100%;object-fit:cover;' %>
+                    </div>
+                <% end %>
+              </div>
+              <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon bg-dark" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                <span class="carousel-control-next-icon bg-dark" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+              </button>
+            </div>
+        <% end %>
+
+        <div class="card-body">
+            <h5 class="card-title"><%= @post.title %></h5>
+            <p class="card-text"><%= @post.description%></p>
+        </div>
+
+        <div class="actions">
+            <% if user_signed_in? %>
+                <% if policy(@post).edit? %>
+                    <%= link_to "Delete", post_path(@post),method: :delete, data: {:confirm => "Are you sure"}, class: 'btn btn-danger m-1', style: 'width:fit-content' %>
+                    <%= link_to "Edit", edit_post_path, class: 'btn btn-primary', style: 'width:fit-content' %>
+                <% end %>
+                <%= link_to "Add Comment", new_post_comments_path(:post_id => @post.id), class: 'btn btn-primary', style: 'width:fit-content' %>
+            <% end %>
+                
+        </div>
+        <% if !@post.comments.nil? %>
+        <ul class="list-group mt-3">
+          <% @post.comments.each do |comment| %>
+              <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                <%= comment.message %> <%= link_to "Edit", edit_post_comments_path(:id =>comment.id,:post_id => comment.post_id), class: "text-decoration-none" if user_signed_in? && policy(comment).edit? %>
+              </li>
+          <% end %>
+        </ul>
+      <% end %>
+    </div>
+</div>

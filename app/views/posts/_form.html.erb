@@ -1,0 +1,36 @@
+<div class="container-fluid w-25 border mt-5 rounded">
+  <h4 class="text-center p-2">Add Post</h4>
+  <%= form_with(model: post, local: true) do |form| %>
+    <div class="mb-3">
+      <%= form.label :title, class: "form-label" %>
+      <%= form.text_field :title, placeholder: 'Post Title', class: "form-control" %>
+      <% if post.errors.any? %>
+	    <div class="invalid-feedback d-block">
+	      <% post.errors.full_messages_for(:title).each do |error_message| %>
+	        <%= error_message %>.
+	      <% end %>
+	    </div>
+	  <% end %>
+    </div>
+
+    <div class="mb-3">
+      <%= form.label :description, class: "form-label" %>
+      <%= form.text_area :description, placeholder: 'Post Description', class: "form-control" %>
+      <% if post.errors.any? %>
+	    <div class="invalid-feedback d-block">
+	      <% post.errors.full_messages_for(:description).each do |error_message| %>
+	        <%= error_message %>.
+	      <% end %>
+	    </div>
+	  <% end %>
+    </div>
+
+    <div class="input-group mb-3">
+      <%= form.file_field :pictures, class: "form-control", multiple: true %>
+    </div>
+
+    <div class="mb-3 text-center">
+      <%= form.submit class: "btn btn-primary toaster-check" %>
+    </div>
+  <% end %>
+</div>
